@@ -17,15 +17,6 @@ class App extends Component {
   }
 
   renderRoute() {
-    if (this.state.route === '/users') {
-      return <UsersPage />;
-    }
-
-    if (this.state.route.startsWith('/users/')) {
-      const id = this.state.route.split('/users/')[1];
-      return <SingleUserPage id={id} />;
-    }
-
     return <HomePage />;
   }
 

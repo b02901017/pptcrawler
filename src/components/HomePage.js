@@ -33,6 +33,7 @@ class HomePage extends Component {
         <td className="mdl-data-table__cell--non-numeric custom">{Date}</td>
         <td className="mdl-data-table__cell--non-numeric custom">{Author}</td>
         <td className="mdl-data-table__cell--non-numeric custom">{Content}</td>
+        <td className="mdl-data-table__cell--non-numeric custom"><a href = {"https://www.ptt.cc/"+Link}>點我</a></td>
       </tr>
 
     )
@@ -65,6 +66,7 @@ class HomePage extends Component {
               <th className="mdl-data-table__cell--non-numeric custom">Date</th>
               <th className="mdl-data-table__cell--non-numeric custom">Author</th>
               <th className="mdl-data-table__cell--non-numeric custom">Content length</th>
+              <th className="mdl-data-table__cell--non-numeric custom">查看原文</th>
             </tr>
           </thead>
           <tbody>

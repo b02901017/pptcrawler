@@ -11,6 +11,12 @@ const dbConfig = dbConfigFile[process.env.NODE_ENV];
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://'+dbConfigFile.development.username+':'+dbConfigFile.development.password + '@127.0.0.1:27017/mydb');
 
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', ()=>{
+    console.log('connected');
+});
+
 const port = process.env.PORT || 3000;
 const app = express();
 const compiler = webpack(config);

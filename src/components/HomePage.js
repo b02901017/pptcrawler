@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-
+import Select from 'react-select'
 import Navbar from './Navbar';
 class HomePage extends Component {
   constructor(props) {
       super(props);
-      this.state = { m_list: [] , index : 0};
+      this.state = { m_list: [], v_list : [], c_list : [], index : 0, selectValue : ""};
   }
   componentWillMount(){
     fetch("/api/movie/")
@@ -15,21 +15,24 @@ class HomePage extends Component {
                 return res.json();
             })
             .then(json => {
+                let c_list = json.map(function(i) {return i.Category;});
+                c_list = [...new Set(c_list)];
                 this.setState({
-                    m_list: json
+                    m_list: json,
+                    v_list : json,
+                    c_list : c_list
                 })
-                console.log(this.state.m_list);
             }).catch((error)=> {
                 console.log("error");
             });
 
   }
   renderTebleItem(item, i){
-    const {Author, Catagory, Content, Date, Link, Push} = item;
+    const {Author, Category, Content, Date, Link, Push} = item;
     return(
       <tr>
         <td className="mdl-data-table__cell--non-numeric custom">{Push}</td>
-        <td className="mdl-data-table__cell--non-numeric custom">{Catagory}</td>
+        <td className="mdl-data-table__cell--non-numeric custom">{Category}</td>
         <td className="mdl-data-table__cell--non-numeric custom">{Date}</td>
         <td className="mdl-data-table__cell--non-numeric custom">{Author}</td>
         <td className="mdl-data-table__cell--non-numeric custom">{Content}</td>
@@ -52,17 +55,37 @@ class HomePage extends Component {
     })
 
   }
+  updateSelect(newValue) {
+    const {m_list} = this.state;
+    this.setState({ selectValue: newValue });
+    let result = m_list.filter(function( obj ) {
+      return obj.Category == newValue;
+    });
+    if (!newValue){
+      result = m_list
+    }
+    this.setState({
+      v_list : result,
+      index : 0 
+    })
+  }
   render() {
-    const {m_list, index} = this.state;
-
+    const {m_list, index, c_list, v_list} = this.state;
+    let options = c_list.map(function(c) {
+        var eObj = {};
+        eObj['label'] = c;
+        eObj['value'] = c;
+        return eObj;
+    });
     return (
       <div className = "main" >
+        
         <div className="glyphicon glyphicon-chevron-left btn-left" onClick = {this.handleLeft.bind(this)} />
         <table className="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
           <thead>
             <tr>
               <th className="mdl-data-table__cell--non-numeric custom">Push</th>
-              <th className="mdl-data-table__cell--non-numeric custom">Catagory</th>
+              <th className="mdl-data-table__cell--non-numeric custom">Category</th>
               <th className="mdl-data-table__cell--non-numeric custom">Date</th>
               <th className="mdl-data-table__cell--non-numeric custom">Author</th>
               <th className="mdl-data-table__cell--non-numeric custom">Content length</th>
@@ -70,9 +93,18 @@ class HomePage extends Component {
             </tr>
           </thead>
           <tbody>
-            {m_list.slice(index,index+10).map(this.renderTebleItem,this)}
+            {v_list.slice(index,index+10).map(this.renderTebleItem,this)}
           </tbody>
         </table>
+        <div className = "search" >
+        <Select ref = "rIDSelect"
+          autofocus options = { options }
+          simpleValue placeholder = "請輸入類別"
+          clearable = { true }
+          value = { this.state.selectValue }
+          onChange = { this.updateSelect.bind(this) }
+          searchable = { this.state.searchable } /> 
+        </div >
 
         <div className="glyphicon glyphicon-chevron-right btn-right " onClick = {this.handleRight.bind(this)} />
       </div>)

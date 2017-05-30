@@ -43,6 +43,5 @@ app.listen(port, err => {
     console.log(err);
     return;
   }
-
   console.log(`Listening at http://localhost:${port}`);
 });

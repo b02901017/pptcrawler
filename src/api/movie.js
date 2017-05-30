@@ -5,6 +5,7 @@ import data from "../../data/data.json"
 const movieRouter = new Router();
 
 movieRouter.get('/', (req, res) => {
+	// return res.end(JSON.stringify(data));
 	Movie.find({}).lean().exec(function (err, movies) {
 		if (err) return handleError(err);
     	return res.end(JSON.stringify(movies));

@@ -53,17 +53,17 @@ app.use(_bodyParser2.default.urlencoded({
 }));
 app.use(_bodyParser2.default.json());
 
-app.use(require('webpack-dev-middleware')(compiler, {
-  publicPath: _webpack4.default.output.publicPath,
-  stats: {
-    colors: true
-  }
-}));
+// app.use(require('webpack-dev-middleware')(compiler, {
+//   publicPath: _webpack4.default.output.publicPath,
+//   stats: {
+//     colors: true
+//   }
+// }));
 app.use('/api', _api2.default);
 app.use('/static', _express2.default.static('public'));
-app.get('*', function (req, res) {
-  res.sendFile(_path2.default.join(__dirname, 'index.html'));
-});
+// app.get('*', function (req, res) {
+//   res.sendFile(_path2.default.join(__dirname, 'index.html'));
+// });
 
 app.listen(port, function (err) {
   if (err) {

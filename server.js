@@ -9,7 +9,7 @@ import dbConfigFile from './config/config';
 
 const dbConfig = dbConfigFile[process.env.NODE_ENV];
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://'+dbConfigFile.development.username+':'+dbConfigFile.development.password + '@127.0.0.1:27017/mydb');
+mongoose.connect('mongodb://'+'cc2017'+':'+'12345' + '@104.198.249.209:27017/mydb');
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -26,17 +26,17 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.use(require('webpack-dev-middleware')(compiler, {
-  publicPath: config.output.publicPath,
-  stats: {
-    colors: true,
-  },
-}));
+// app.use(require('webpack-dev-middleware')(compiler, {
+//   publicPath: config.output.publicPath,
+//   stats: {
+//     colors: true,
+//   },
+// }));
 app.use('/api', api);
 app.use('/static', express.static('public'));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'index.html'));
+// });
 
 app.listen(port, err => {
   if (err) {

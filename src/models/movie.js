@@ -7,16 +7,17 @@ const options = {
   },
 };
 
-const movieSchema = mongoose.Schema({
-  	_id: Object,
-    Push: String,
-    Author: String,
-    Title:String,
-    Date:String,
-    Link:String,
-    Catagory:String,
-    Content:Number
+const movieSchema = mongoose.Schema({   
+  _id : Object, 
+  Date :String, 
+  Grade : String, 
+  ImgURL : String, 
+  Movietitle : String, 
+  Rate : String,
+  Score : Number, 
+  Time : String 
+
 
 }, options);
 
-export const Movie = mongoose.model('Movie', movieSchema, 'movie');
+export const Movie = mongoose.model('Movie', movieSchema, 'movieindex');
